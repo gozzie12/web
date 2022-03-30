@@ -1,0 +1,42 @@
+
+<!-- By Andy Nguyen -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JavaScript Github Assignment</title>
+    <input type="text" placeholder="Type " id="inputId">
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+    </script>
+    <script>
+        $(document).ready(function(){
+            let inputVal = document.getElementById("inputId").value;
+            console.log("document is ready")
+            $('#btn').click(async function(){
+                $('#placeholder').empty();
+                let inputVal = document.getElementById("inputId").value;
+                console.log("button works")
+                response = await fetch("http://86.185.148.12:5000/api/v1/resources/personality?name=".concat(inputVal))
+                d = await response.text()
+                $('#placeholder').append(d);
+            })
+
+            $.get("https://api.github.com/users/andynhn", displayName)
+            function displayName(data) {
+            console.log(data);
+            }
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <button id="btn">Get Github Display Name</button>
+        <p id="placeholder"></p>
+    </div>
+</body>
+</html>
