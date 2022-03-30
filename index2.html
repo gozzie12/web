@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>JavaScript Github Assignment</title>
-    <input type="text" placeholder="Type " id="inputId">
     <script
         src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -15,16 +14,20 @@
     </script>
     <script>
         $(document).ready(function(){
-            let inputVal = document.getElementById("inputId").value;
             console.log("document is ready")
             $('#btn').click(async function(){
-                $('#placeholder').empty();
                 let inputVal = document.getElementById("inputId").value;
                 console.log("button works")
-                response = await fetch("http://86.185.148.12:5000/api/v1/resources/personality?name=".concat(inputVal))
+                response = await fetch("http://127.0.0.1:5000/api/v1/resources/personality?name=".concat(inputVal))
                 d = await response.text()
+                $('#placeholder').empty();
                 $('#placeholder').append(d);
             })
+            $("#inputId").keyup(function(event) {
+             if (event.keyCode === 13) {
+              $("#btn").click();
+              }
+            });
 
             $.get("https://api.github.com/users/andynhn", displayName)
             function displayName(data) {
@@ -32,10 +35,29 @@
             }
         });
     </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+    body {font-size: 16px;}
+    img {margin-bottom: -8px;}
+    .mySlides {display: none;}
+    .center {
+    border: 5px solid #ff4800;
+    text-align: center;
+    padding: 50px 0;
+    }
+    </style>
+    </head>
 </head>
-<body>
     <div>
-        <button id="btn">Get Github Display Name</button>
+        <h1>What's your personality?</h1>
+    </div>
+    <div class="center">
+        <input type="text" placeholder="Type " id="inputId">
+        <button id="btn">Get personality</button>
         <p id="placeholder"></p>
     </div>
 </body>

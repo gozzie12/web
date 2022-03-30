@@ -1,21 +1,18 @@
 from ast import literal_eval
 from random import randint
-from names_dataset import NameDataset
-
-
-nameDB = NameDataset()
 
 global gmesg
-gmesg = [" is nice", " is naughty", " is Annoying", " is super pushy", " is a pussy", " is very gay, watch out they might try and convert you", " is helpful", " is forgiving", " is crazy", " is energetic", " is funny", " is fabulous", " is not funny"]
+gmesg = [" is nice", " is naughty", " is Annoying", " is super pushy", " is cowardly", " is very happy", " is helpful", " is forgiving", " is crazy", " is energetic", " is funny", " is fabulous", " is not funny", " is clever", " is fun", " is generous"," is loving", " is beautiful"," is aggrovating", " is stupid", " is thoughtful"," is beligerant", " is arrogant", " is conciencous", " is dueplicitcous", " is witty", " is anxious", " is timid", " is shy", " is gullible", " is feeble minded", " is wild", " is complicated", " is loud", " is obnoxius", " is greagrious", " is introverted", " is noxious", " is maciavellian", " is sly", " is goodnatured", " is considarte", " is indepandant", " is gentle", " is amouras", " is cold", " is warm hearted", " is lively", " is slow", " is mendatious", " is quirky", " is sarcastic", " is quirky", " is winsome", " is excentric", " is sexy"]
 global kname
 kname = []
+print(len(gmesg))
 
 def personalityGen(name):
     personalityNum = randint(0,len(gmesg)-1)
     appender(name, personalityNum)
     update()
-    print(name + getPersonality(name))
-    return(name + getPersonality(name))
+    print(name + getPersonality(name.lower()))
+    return(name + getPersonality(name.lower()))
 
 def loadFile():
     global kname
@@ -37,17 +34,13 @@ def update():
     personality3.close()
 
 def checkName(name):
-    DB = nameDB.search(name)
-    if type(DB.get('first_name')) == type(None):
-        return False
-    else: 
-        return True
+    return True
 
 def personality(name):
         if checkName(name):
-            if name in kname:
+            if name.lower() in kname:
                 print(1)
-                return(name + gmesg[kname[kname.index(name)+1]])
+                return(name + gmesg[kname[kname.index(name.lower())+1]])
             else:
                 print(2)
                 return(personalityGen(name))
