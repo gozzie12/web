@@ -16,7 +16,7 @@
     $('#btn').click(async function(){
         let inputVal = document.getElementById("inputId").value;
         console.log("button works")
-        response = await fetch("http://86.185.148.12:5000/api/v1/resources/personality?name=".concat(inputVal))
+        response = await fetch("http://http://gozzie.eu.pythonanywhere.com/api/v1/resources/personality?name=".concat(inputVal))
         d = await response.text()
         $('#placeholder').empty();
         $('#placeholder').append(d);
