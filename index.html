@@ -1,0 +1,55 @@
+
+<!-- By Andy Nguyen -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>personality</title>
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+    </script>
+    <script>
+    $('#btn').click(async function(){
+        let inputVal = document.getElementById("inputId").value;
+        console.log("button works")
+        response = await fetch("http://86.185.148.12:5000/api/v1/resources/personality?name=".concat(inputVal))
+        d = await response.text()
+        $('#placeholder').empty();
+        $('#placeholder').append(d);
+    })
+    $("#inputId").keyup(function(event) {
+        if (event.keyCode === 13) {
+        $("#btn").click();
+        }
+    });
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    body {font-size: 16px;}
+    img {margin-bottom: -8px;}
+    .center {
+    border: 5px solid #ff4800;
+    text-align: center;
+    padding: 50px 0;
+    }
+    </style>
+    </head>
+</head>
+    <div>
+        <h1>What's 
+            
+            
+            
+            personality?</h1>
+    </div>
+    <div class="center">
+        <input type="text" placeholder="Type " id="inputId">
+        <button id="btn">Get personality</button>
+        <p id="placeholder"></p>
+    </div>
+</body>
+</html>
