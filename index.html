@@ -20,9 +20,9 @@
                 console.log("button works")
                 response = await fetch("https://gozzie.eu.pythonanywhere.com/api/v1/resources/colour?name=".concat(inputCl))
                 d = await response.text()
-                $('#placeholder').empty();
-                $('#placeholder').append(d);
-                document.getElementById("inputCl").style.color = d
+                $('#placeholdercl').empty();
+                $('#placeholdercl').append(d);
+                document.getElementById("placeholdercl").style.color = d
             })
             $("#inputId").keyup(function(event) {
              if (event.keyCode === 13) {
