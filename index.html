@@ -15,6 +15,25 @@
     <script>
         $(document).ready(function(){
             console.log("document is ready")
+            $('#btnnum').click(async function(){
+                let inputVal = document.getElementById("inputNum").value;
+                console.log("button works")
+                response = await fetch("https://gozzie.eu.pythonanywhere.com/api/v1/resources/num?name=".concat(inputVal))
+                d = await response.text()
+                $('#placeholdernum').empty();
+                $('#placeholdernum').append(d);
+                document.getElementById("placeholdernum").style.color = d
+            })
+            $("#inputId").keyup(function(event) {
+                if (event.keyCode === 13) {
+                $("#btnbtn").click();
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            console.log("document is ready")
             $('#btncl').click(async function(){
                 let inputVal = document.getElementById("inputCl").value;
                 console.log("button works")
@@ -26,7 +45,7 @@
             })
             $("#inputId").keyup(function(event) {
              if (event.keyCode === 13) {
-              $("#btn").click();
+              $("#btncl").click();
               }
             });
         });
@@ -81,6 +100,14 @@
         <input type="text" placeholder="Type " id="inputCl">
         <button id="btncl">Get colour</button>
         <p id="placeholdercl"></p>
+    </div>
+    <div>
+        <h1>What's your lucky number?</h1>
+    </div>
+    <div class="center">
+        <input type="text" placeholder="Type " id="inputNum">
+        <button id="btnnum">Get colour</button>
+        <p id="placeholdernum"></p>
     </div>
 </body>
 </html>
