@@ -12,6 +12,24 @@
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous">
     </script>
+    ,<script>
+        $(document).ready(function(){
+            console.log("document is ready")
+            $('#btncl').click(async function(){
+                let inputVal = document.getElementById("inputCl").value;
+                console.log("button works")
+                response = await fetch("https://gozzie.eu.pythonanywhere.com/api/v1/resources/colour?name=".concat(inputVal))
+                d = await response.text()
+                $('#placeholdercl').empty();
+                $('#placeholdercl').append(d);
+                document.getElementById("placeholdercl").style.color=d;
+            })
+            $("#inputId").keyup(function(event) {
+             if (event.keyCode === 13) {
+              $("#btn").click();
+              }
+            });
+    </script>
     <script>
         $(document).ready(function(){
             console.log("document is ready")
@@ -59,6 +77,14 @@
         <input type="text" placeholder="Type " id="inputId">
         <button id="btn">Get personality</button>
         <p id="placeholder"></p>
+    </div>
+    <div>
+        <h1>What's your favourite colour?</h1>
+    </div>
+    <div class="center">
+        <input type="text" placeholder="Type " id="inputCl">
+        <button id="btncl">Get personality</button>
+        <p id="placeholdercl"></p>
     </div>
 </body>
 </html>
