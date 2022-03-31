@@ -18,7 +18,7 @@
             $('#btncl').click(async function(){
                 let inputVal = document.getElementById("inputCl").value;
                 console.log("button works")
-                response = await fetch("https://gozzie.eu.pythonanywhere.com/api/v1/resources/colour?name=".concat(inputValcl))
+                response = await fetch("https://gozzie.eu.pythonanywhere.com/api/v1/resources/colour?name=".concat(inputCl))
                 d = await response.text()
                 $('#placeholder').empty();
                 $('#placeholder').append(d);
