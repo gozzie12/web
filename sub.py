@@ -1,11 +1,65 @@
 from ast import literal_eval
-from random import randint
-
+from random import randint, random
+from profanity_filter import ProfanityFilter
+pf = ProfanityFilter()
+fp = ProfanityFilter()
 global gmesg
 gmesg = [" is nice", " is naughty", " is Annoying", " is super pushy", " is cowardly", " is very happy", " is helpful", " is forgiving", " is crazy", " is energetic", " is funny", " is fabulous", " is not funny", " is clever", " is fun", " is generous"," is loving", " is beautiful"," is aggrovating", " is stupid", " is thoughtful"," is beligerant", " is arrogant", " is conciencous", " is dueplicitcous", " is witty", " is anxious", " is timid", " is shy", " is gullible", " is feeble minded", " is wild", " is complicated", " is loud", " is obnoxius", " is greagrious", " is introverted", " is noxious", " is maciavellian", " is sly", " is goodnatured", " is considarte", " is indepandant", " is gentle", " is amouras", " is cold", " is warm hearted", " is lively", " is slow", " is mendatious", " is quirky", " is sarcastic", " is quirky", " is winsome", " is excentric", " is sexy"]
 global kname
 kname = []
 print(len(gmesg))
+global clname
+clname = []
+global numname
+numname=[]
+
+cl = open("cl.txt", "r")
+clname = literal_eval(cl.read())
+cl.close()
+numer= open("num.txt","r")
+numname = literal_eval(numer.read())
+numer.close()
+
+
+def favNum(name):
+    if name in numname:
+        return numname[numname.index(name)+1]
+    else:
+        numname.append(name)
+        num = randint(1,100)
+        numname.append(num)
+        updateNum()
+        return numname[numname.index(name)+1]
+
+def updateCl():
+    cl = open("cl.txt", "w")
+    cl.truncate(0)
+    cl.write(str(clname))
+    cl.close()
+
+def updateNum():
+    num = open("num.txt", "w")
+    num.truncate(0)
+    num.write(str(numname))
+    num.close()
+
+def favColour(name):
+    if name in clname:
+        return clname[clname.index(name)+1]
+    else:
+        clname.append(name)
+        clcode = colourGen()
+        clname.append(clcode)
+        updateCl()
+        return clname[clname.index(name)+1]
+
+def colourGen():
+    clcode = hex(randint(0,16777215)).replace("0x","")
+    while len(clcode) != 6:
+        clcode = "0"+clcode
+    return "#"+clcode
+
+
 
 def personalityGen(name):
     personalityNum = randint(0,len(gmesg)-1)
@@ -37,13 +91,15 @@ def checkName(name):
     return True
 
 def personality(name):
-        if checkName(name):
-            if name.lower() in kname:
-                print(1)
-                return(name + gmesg[kname[kname.index(name.lower())+1]])
-            else:
-                print(2)
-                return(personalityGen(name))
+    name = str(name)
+    if checkName(name):
+        if name.lower() in kname:
+            print(1)
+            return(name + gmesg[kname[kname.index(name.lower())+1]])
+        else:
+            print(2)
+            return(personalityGen(name))
+
 
 
 
@@ -65,7 +121,7 @@ def home():
 @cross_origin()
 def api_personality():
     try:
-        
+
         if 'name' in request.args:
             name = str(request.args['name'])
             print(name)
@@ -73,9 +129,51 @@ def api_personality():
             return "Error: No id field provided. Please specify an id."
     except:
         return "Error: No id field provided. Please specify an id."
+    if len(name)>200:
+        return "Error: name too long"
+    elif name.isnumeric():
+        return "Error: do not enter a number"
     print(name)
-    print(str(personality(name)))
-    return str(personality(name))
+    print(str(personality(fp.censor(name.replace("#","").lower()))))
+    return str(personality(fp.censor(name.replace("#","").lower())))
 
 
-app.run(host="0.0.0.0",port = 5000)
+@app.route('/api/v1/resources/colour', methods=['GET'])
+@cross_origin()
+def api_colour():
+    try:
+
+        if 'name' in request.args:
+            name = str(request.args['name'])
+            print(name)
+        else:
+            return "Error: No id field provided. Please specify an id."
+    except:
+        return "Error: No id field provided. Please specify an id."
+    if len(name)>200:
+        return "Error: name too long"
+    elif name.isnumeric():
+        return "Error: do not enter a number"
+    print(name)
+    print(str(favColour(fp.censor(name.replace("#","").lower()))))
+    return str(favColour(fp.censor(name.replace("#","").lower())))
+
+@app.route('/api/v1/resources/num', methods=['GET'])
+@cross_origin()
+def api_num():
+    try:
+
+        if 'name' in request.args:
+            name = str(request.args['name'])
+            print(name)
+        else:
+            return "Error: No id field provided. Please specify an id."
+    except:
+        return "Error: No id field provided. Please specify an id."
+    if len(name)>200:
+        return "Error: name too long"
+    elif name.isnumeric():
+        return "Error: do not enter a number"
+    print(name)
+    print(str(favNum(fp.censor(name.replace("#","").lower()))))
+    return str(favNum(fp.censor(name.replace("#","").lower())))
